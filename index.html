@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>COUNTDOWN</title>
+        <link rel="stylesheet" type="text/css" href="./style.css" />
+    </head>
+    <body>
+        <h2 class="Cybertron">#BlaBlaBla</h2>
+        <button type="button"><h1>Click Here To Reveal The Logo</h1></button>
+        <h2 class="Cyber">2023<br><span>Cyber Security Symposium Title Reveal</span></h2>
+        <div id="time">
+            <div class="circle" style="--clr:#ff2972;">
+                <div class="dots hr_dot"></div>
+                <svg>
+                    <circle cx="70" cy="70" r="70"></circle>
+                    <circle cx="70" cy="70" r="70" id="hh"></circle>
+                </svg>
+                <div id="hours">00<br><span>Hours</span></div>
+            </div>
+
+            <div class="circle" style="--clr:#fee800;">
+                <div class="dots min_dot"></div>
+                <svg>
+                    <circle cx="70" cy="70" r="70"></circle>
+                    <circle cx="70" cy="70" r="70" id="mm"></circle>
+                </svg>
+                <div id="minutes">00<br><span>Days</span></div>
+            </div>
+
+            <div class="circle" style="--clr:#04fc43;">
+                <div class="dots sec_dot"></div>
+                <svg>
+                    <circle cx="70" cy="70" r="70"></circle>
+                    <circle cx="70" cy="70" r="70" id="ss"></circle>
+                </svg>
+                <div id="seconds">00<br><span>Seconds</span></div>
+            </div>
+        </div> 
+        <script>
+            let  hours= document.getElementById("hours");
+let  minutes= document.getElementById("minutes");
+let  seconds= document.getElementById("seconds");
+
+let hh=document.getElementById("hh");
+let mm=document.getElementById("mm");
+let ss=document.getElementById("ss");
+
+let hr_dot=document.querySelector(".hr_dot");
+let min_dot=document.querySelector(".min_dot");
+let sec_dot=document.querySelector(".sec_dot");
+
+let endDate= "08/19/2023 12:59:00";
+//date format mm/dd/yyyy
+
+let x = setInterval(function(){
+    let now = new Date(endDate).getTime();
+    let countDown= new Date().getTime();
+    let distance = now - countDown;
+
+    // time calculation for days,hours,minutes,seconds
+
+    let h = Math.floor(distance%(1000 * 60 * 60 * 24)/(1000 * 60 * 60));
+    let m = Math.floor(distance%(1000 * 60 * 60)/(1000 * 60));
+    let s = Math.floor(distance%(1000 * 60)/(1000));
+
+    // output the result in element with id
+    hours.innerHTML=h+"<br><span>Hours</span>";
+    minutes.innerHTML=m+"<br><span>Minutes</span>";
+    seconds.innerHTML=s+"<br><span>Seconds</span>";
+
+    //animate  stroke 
+    hh.style.strokeDashoffset = 440 - (440 * h) / 24;
+    mm.style.strokeDashoffset = 440 - (440 * m) / 60; 
+    ss.style.strokeDashoffset = 440 - (440 * s) / 60;
+                
+    //animate circle.dots
+    hr_dot.style.transform = `rotateZ(${h * 15}deg)`;
+    min_dot.style.transform = `rotateZ(${m * 6}deg)`;
+    sec_dot.style.transform = `rotateZ(${s * 6}deg)`;
+
+    //if the countdown is over, write some text
+    if(distance < 0){
+        clearInterval(x);
+
+        document.getElementById("time").style.display="none";
+        document.querySelector(".Cyber").style.display="none";
+        document.querySelector(".Cybertron").style.display="block";
+        document.querySelector("button").style.display="block";
+        document.querySelector("body").style.gap="900px";
+    }
+                
+ })
+        </script>    
+    </body>
+</html>
